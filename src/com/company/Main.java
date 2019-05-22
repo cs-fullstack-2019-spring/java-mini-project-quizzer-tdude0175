@@ -44,7 +44,12 @@ public class Main {
         System.out.println("3."+ (userQuestion.get(3)));
         System.out.println("4."+ (userQuestion.get(4)));
         String answer = scan.next();
-        if(answer.equalsIgnoreCase(userQuestion.get(5)))
+        if(answer.equalsIgnoreCase("skip"))
+        {
+            System.out.println("question saved for later");
+            return value;
+        }
+        else if(answer.equalsIgnoreCase(userQuestion.get(5)))
         {
             System.out.println("You got it right");
             return value+1;
@@ -75,10 +80,16 @@ public class Main {
         {
             e.printStackTrace();
         }
-
         System.out.println("Please Enter Your name.");
         String userName = scan.nextLine();
-        int[] questionsToAsk = randomNumberCollection(5,question.size()-1);
+        System.out.println("How many questions do you want?");
+        int howManyQuestions = scan.nextInt();
+        while ( howManyQuestions > question.size())
+        {
+            System.out.println("Please Enter a correct number");
+            howManyQuestions = scan.nextInt();
+        }
+        int[] questionsToAsk = randomNumberCollection(howManyQuestions,question.size()-1);
         int score = 0;
         for(int i=0; i<questionsToAsk.length;i++) {
             String[] splitQuestion = question.get(questionsToAsk[i]).split(",");
@@ -87,6 +98,6 @@ public class Main {
                 score++;
             }
         }
-        System.out.println(userName+ " got a score of "+score);
+        System.out.println(userName+ " got a score of "+score+ " out of " +howManyQuestions);
     }
 }
